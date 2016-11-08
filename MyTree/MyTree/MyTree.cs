@@ -6,7 +6,138 @@ using System.Threading.Tasks;
 
 namespace MyTree
 {
-    public class MyTree
+    /// <summary>
+    /// Класс представляет элемент дерева.
+    /// </summary>
+    /// <typeparam name="TypeNode">Любой тип</typeparam>
+    public class TreeNode<TypeNode>
     {
+        /// <summary>
+        /// Конструктор, инициализирующий элемент переданным значением.
+        /// </summary>
+        /// <param name="value">значение элемента</param>
+        public TreeNode(TypeNode value)
+        {
+            Value = value;
+        }
+
+        /// <summary>
+        /// Коллекция потомков элемента.
+        /// </summary>
+        public List<TreeNode<TypeNode>> Children { get; set; }
+
+        /// <summary>
+        /// Представляет родительский элемент.
+        /// </summary>
+        public TreeNode<TypeNode> Parent { get; internal set; }
+
+        /// <summary>
+        /// Представляет значение элемента.
+        /// </summary>
+        public TypeNode Value { get; internal set; }
+
+    }
+
+    /// <summary>
+    /// Представляет дерево
+    /// </summary>
+    /// <typeparam name="T">Любой тип</typeparam>
+    public class MyTree<T>
+    {
+        private TreeNode<T> Head; //Корень дерева
+
+        /// <summary>
+        ///Количество элементов дерева
+        /// </summary>
+        public int Length { get; private set; }
+
+        #region Ненужное
+        ///// <summary>
+        /////Глубина дерева 
+        ///// </summary>
+        //public int Depth { get; private set; }
+
+        ///// <summary>
+        /////Максимальная ширина дерева 
+        ///// </summary>
+        //public int MaxWidth { get; private set; }
+        #endregion
+
+        /// <summary>
+        /// Добавление нового элемента дерева
+        /// </summary>
+        /// <param name="value">значение элемента</param>
+        /// <param name="parent">родительский элемент или NULL, если добавляется корень дерева</param>
+        public void Add(TreeNode<T> parent, T value)
+        {
+            if (parent == null)
+            {
+                Head = new TreeNode<T>(value); //Если родитель отсутствует, то мы создаем новый корень дерева (новое дерево).
+                Length++;
+            }
+            else
+            {
+                if (Head == null) throw new InvalidOperationException("Дерево не имеет элементов"); //Если мы пытаемся в пустое дерево записать новый элемент с указанным (не пустым) родителем - выдаем ошибку.
+                TreeNode<T> newnode = new TreeNode<T>(value);
+                Length++;
+                newnode.Parent = parent;
+                parent.Children.Add(newnode);
+            }
+        }
+
+        /// <summary>
+        /// Удаление элемента
+        /// </summary>
+        /// <param name="removed_item">удаляемый элемент</param>
+        public void Remove(TreeNode<T> removed_item)
+        {
+            if (removed_item == null) throw new ArgumentNullException("Удаляемый элемент не может быть NULL");
+            if (removed_item.Parent == null) //Если удаляемый элемент - корень дерева.
+            {
+                Head = null;
+                for (int i = 0; i < removed_item.Children.Count - 1; i++) //В цикле мы первого наследника удаляемого элемента ставим на место корня и перезаписываем наследников.
+                {
+                    if (i == 0)
+                    {
+                        Head = removed_item.Children[0];
+                    }
+                    else
+                    {
+                        removed_item.Children[i].Parent = Head;
+                        Head.Children.Add(removed_item.Children[i]);
+                    }
+                }
+            }
+            else //Если удаляемый элемент имеет родителя.
+            {
+                for (int i = 0; i < removed_item.Parent.Children.Count - 1; i++) //Удаляем элемент из коллекции наследников родителя
+                {
+                    if (removed_item.Parent.Children[i].GetHashCode() == removed_item.GetHashCode()) removed_item.Parent.Children.RemoveAt(i);
+                }
+                TreeNode<T> newnode=null;
+                for (int i = 0; i < removed_item.Children.Count - 1; i++) //В новый узел записываем первого наследника удаляемого элемента и добавляем к коллекции нового узла наследников удаляемого элемента.
+                {
+                    if (i == 0)
+                    {
+                        newnode = removed_item.Children[0];
+                    }
+                    else
+                    {
+                        newnode.Children.Add(removed_item.Children[i]);
+                    }
+                }
+                if (newnode != null) removed_item.Parent.Children.Add(newnode); //Если удаляемый узел был не крайним в дереве - записываем его в коллекцию наследников родителя.
+            }
+        }
+
+        /// <summary>
+        /// Очистка дерева
+        /// </summary>
+        public void Clear()
+        {
+            Head = null;
+            Length = 0;
+        }
+
     }
 }
