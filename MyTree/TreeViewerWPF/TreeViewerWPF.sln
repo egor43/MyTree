@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTree", "MyTree\MyTree.csproj", "{9BBB88E1-D401-44C1-808E-6D5B460E5E15}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeViewerWPF", "TreeViewerWPF\TreeViewerWPF\TreeViewerWPF.csproj", "{8F2C3F15-0E2B-4A4E-8DD6-E18234C795EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeViewerWPF", "TreeViewerWPF\TreeViewerWPF.csproj", "{8F2C3F15-0E2B-4A4E-8DD6-E18234C795EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9BBB88E1-D401-44C1-808E-6D5B460E5E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BBB88E1-D401-44C1-808E-6D5B460E5E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BBB88E1-D401-44C1-808E-6D5B460E5E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BBB88E1-D401-44C1-808E-6D5B460E5E15}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F2C3F15-0E2B-4A4E-8DD6-E18234C795EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F2C3F15-0E2B-4A4E-8DD6-E18234C795EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F2C3F15-0E2B-4A4E-8DD6-E18234C795EE}.Release|Any CPU.ActiveCfg = Release|Any CPU

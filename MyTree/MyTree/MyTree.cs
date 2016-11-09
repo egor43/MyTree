@@ -19,12 +19,13 @@ namespace MyTree
         public TreeNode(TypeNode value)
         {
             Value = value;
+            Children = new List<TreeNode<TypeNode>>();
         }
 
         /// <summary>
         /// Коллекция потомков элемента.
         /// </summary>
-        public List<TreeNode<TypeNode>> Children { get; set; }
+        public List<TreeNode<TypeNode>> Children { get; internal set; }
 
         /// <summary>
         /// Представляет родительский элемент.
@@ -44,7 +45,10 @@ namespace MyTree
     /// <typeparam name="T">Любой тип</typeparam>
     public class MyTree<T>
     {
-        private TreeNode<T> Head; //Корень дерева
+        /// <summary>
+        /// Корень дерева
+        /// </summary>
+        public TreeNode<T> Head { get; private set; } 
 
         /// <summary>
         ///Количество элементов дерева
