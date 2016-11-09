@@ -15,10 +15,14 @@
             <MenuItem Header="Масштаб:" IsEnabled="False"/>
             <MenuItem Name="ZoomUp" Header="+" Click="ZoomUp_Click"/>
             <MenuItem Name="ZoomDown" Header="-" Click="ZoomDown_Click"/>
+            <MenuItem  Header="    " IsEnabled="False"/>
+            <MenuItem Name="CreateNew" Header="Создать новое дерево" Click="CreateNew_Click"/>
+            <MenuItem Name="Clear" Header="Очистить дерево" Click="Clear_Click"/>
         </Menu>
         <ScrollViewer Grid.Row="1" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
             <Grid x:Name="grid" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ScrollViewer>
-        <TextBlock Name="Logo" Text="My Tree Viewer v:1.1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="36"/>
+        <TextBlock Name="Logo" Text="My Tree Viewer v:1.2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="36"/>
+        <ProgressBar Name="progress" Width="400" Height="20" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,80,0,0" SmallChange="1" />
     </Grid>
 </Window>

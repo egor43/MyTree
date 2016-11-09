@@ -30,20 +30,18 @@ namespace TreeViewerWPF
     {
         public MyTree<string> Tree = new MyTree<string>();
         public byte Zoom = 1;
-        public byte time = 3;
+        public byte time = 4;
         public DispatcherTimer timer = new DispatcherTimer();
         public TreeNode<string> trenode;
-
-
 
         public MainWindow()
         {
             InitializeComponent();
+            progress.Maximum = time;
             menu.IsEnabled = false;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += new EventHandler(Logo_Show);
             timer.Start();
-            Tree.Add(null, "0");
         }
 
         public void NodeDialog(object sender, MouseButtonEventArgs e)
@@ -52,9 +50,10 @@ namespace TreeViewerWPF
             trenode = btn.Tag as TreeNode<string>;
             NodeDialog DialogWindow = new NodeDialog();
             DialogWindow.Owner = this;
+            DialogWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             DialogWindow.ShowDialog();
             grid.Children.Clear();
-            PrintTree<string>(Tree.Head, 0, 0, Zoom);
+            if (Tree.Head!=null) PrintTree<string>(Tree.Head, 0, 0, Zoom);
         }
 
         public void PrintTree<T>(TreeNode<T> tree, double StartX, double StartY, byte zoom = 1)
@@ -138,14 +137,14 @@ namespace TreeViewerWPF
         {
             if (Zoom < 10) Zoom++;
             grid.Children.Clear();
-            PrintTree<string>(Tree.Head, 0, 0, Zoom);
+            if (Tree.Head != null) PrintTree<string>(Tree.Head, 0, 0, Zoom);
         }
 
         private void ZoomDown_Click(object sender, RoutedEventArgs e)
         {
             if (Zoom > 1) Zoom--;
             grid.Children.Clear();
-            PrintTree<string>(Tree.Head, 0, 0, Zoom);
+            if (Tree.Head != null) PrintTree<string>(Tree.Head, 0, 0, Zoom);
         }
 
         private void Logo_Show(object sender, EventArgs e)
@@ -156,9 +155,33 @@ namespace TreeViewerWPF
                 menu.IsEnabled = true;
                 Logo.IsEnabled = false;
                 Logo.Visibility = Visibility.Collapsed;
+                progress.IsEnabled = false;
+                progress.Visibility = Visibility.Collapsed;
             }
             time--;
-            Logo.Text += ".";
+            progress.Value++;
+        }
+
+        private void CreateNew_Click(object sender, RoutedEventArgs e)
+        {
+            trenode = null;
+            NodeDialog DialogWindow = new NodeDialog();
+            DialogWindow.Owner = this;
+            DialogWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            DialogWindow.ShowDialog();
+            grid.Children.Clear();
+            if (Tree.Head != null) PrintTree<string>(Tree.Head, 0, 0, Zoom);
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите очистить Дерево?", "Очистка Дерева", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                Tree.Clear();
+                grid.Children.Clear();
+                trenode = null;
+            }
         }
     }
 }

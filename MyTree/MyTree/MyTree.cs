@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyTree
 {
@@ -55,18 +52,6 @@ namespace MyTree
         /// </summary>
         public int Length { get; private set; }
 
-        #region Ненужное
-        ///// <summary>
-        /////Глубина дерева 
-        ///// </summary>
-        //public int Depth { get; private set; }
-
-        ///// <summary>
-        /////Максимальная ширина дерева 
-        ///// </summary>
-        //public int MaxWidth { get; private set; }
-        #endregion
-
         /// <summary>
         /// Добавление нового элемента дерева
         /// </summary>
@@ -104,6 +89,7 @@ namespace MyTree
                     if (i == 0)
                     {
                         Head = removed_item.Children[0];
+                        removed_item.Children[0].Parent = null;
                     }
                     else
                     {
@@ -130,6 +116,7 @@ namespace MyTree
                     else
                     {
                         newnode.Children.Add(removed_item.Children[i]);
+                        removed_item.Children[i].Parent = newnode;
                     }
                 }
                 if (newnode != null) removed_item.Parent.Children.Add(newnode); //Если удаляемый узел был не крайним в дереве - записываем его в коллекцию наследников родителя.

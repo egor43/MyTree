@@ -28,7 +28,7 @@ namespace TreeViewerWPF
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
             main = this.Owner as MainWindow;
-            main.Tree.Add(main.trenode,tb_AddContent.Text);
+            main.Tree.Add(main.trenode, tb_AddContent.Text);
             this.Close();
         }
 
