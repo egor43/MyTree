@@ -99,7 +99,7 @@ namespace MyTree
             if (removed_item.Parent == null) //Если удаляемый элемент - корень дерева.
             {
                 Head = null;
-                for (int i = 0; i < removed_item.Children.Count - 1; i++) //В цикле мы первого наследника удаляемого элемента ставим на место корня и перезаписываем наследников.
+                for (int i = 0; i < removed_item.Children.Count; i++) //В цикле мы первого наследника удаляемого элемента ставим на место корня и перезаписываем наследников.
                 {
                     if (i == 0)
                     {
@@ -114,16 +114,18 @@ namespace MyTree
             }
             else //Если удаляемый элемент имеет родителя.
             {
-                for (int i = 0; i < removed_item.Parent.Children.Count - 1; i++) //Удаляем элемент из коллекции наследников родителя
+                for (int i = 0; i < removed_item.Parent.Children.Count; i++) //Удаляем элемент из коллекции наследников родителя
                 {
                     if (removed_item.Parent.Children[i].GetHashCode() == removed_item.GetHashCode()) removed_item.Parent.Children.RemoveAt(i);
                 }
                 TreeNode<T> newnode=null;
-                for (int i = 0; i < removed_item.Children.Count - 1; i++) //В новый узел записываем первого наследника удаляемого элемента и добавляем к коллекции нового узла наследников удаляемого элемента.
+                for (int i = 0; i < removed_item.Children.Count; i++) //В новый узел записываем первого наследника удаляемого элемента и добавляем к коллекции нового узла наследников удаляемого элемента.
                 {
                     if (i == 0)
                     {
+                        
                         newnode = removed_item.Children[0];
+                        newnode.Parent = removed_item.Parent;
                     }
                     else
                     {

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
+using System.Windows.Threading;
 using MyTree;
 
 namespace TreeViewerWPF
@@ -27,22 +28,33 @@ namespace TreeViewerWPF
 
     public partial class MainWindow : Window
     {
-        public MyTree<int> Tree = new MyTree<int>();
+        public MyTree<string> Tree = new MyTree<string>();
         public byte Zoom = 1;
+        public byte time = 3;
+        public DispatcherTimer timer = new DispatcherTimer();
+        public TreeNode<string> trenode;
+
+
 
         public MainWindow()
         {
             InitializeComponent();
-            Tree.Add(null, 0);
+            menu.IsEnabled = false;
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += new EventHandler(Logo_Show);
+            timer.Start();
+            Tree.Add(null, "0");
         }
 
         public void NodeDialog(object sender, MouseButtonEventArgs e)
         {
             Button btn = sender as Button;
-            TreeNode<int> trenode = btn.Tag as TreeNode<int>;
-            trenode.Children.Add(new TreeNode<int>(1));
+            trenode = btn.Tag as TreeNode<string>;
+            NodeDialog DialogWindow = new NodeDialog();
+            DialogWindow.Owner = this;
+            DialogWindow.ShowDialog();
             grid.Children.Clear();
-            PrintTree<int>(Tree.Head, 0, 0, Zoom);
+            PrintTree<string>(Tree.Head, 0, 0, Zoom);
         }
 
         public void PrintTree<T>(TreeNode<T> tree, double StartX, double StartY, byte zoom = 1)
@@ -126,14 +138,27 @@ namespace TreeViewerWPF
         {
             if (Zoom < 10) Zoom++;
             grid.Children.Clear();
-            PrintTree<int>(Tree.Head, 0, 0, Zoom);
+            PrintTree<string>(Tree.Head, 0, 0, Zoom);
         }
 
         private void ZoomDown_Click(object sender, RoutedEventArgs e)
         {
             if (Zoom > 1) Zoom--;
             grid.Children.Clear();
-            PrintTree<int>(Tree.Head, 0, 0, Zoom);
+            PrintTree<string>(Tree.Head, 0, 0, Zoom);
+        }
+
+        private void Logo_Show(object sender, EventArgs e)
+        {
+            if (time < 1)
+            {
+                timer.Stop();
+                menu.IsEnabled = true;
+                Logo.IsEnabled = false;
+                Logo.Visibility = Visibility.Collapsed;
+            }
+            time--;
+            Logo.Text += ".";
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TreeViewerWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="700">
+        Title="My Tree Viewer" Height="800" Width="700" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -19,5 +19,6 @@
         <ScrollViewer Grid.Row="1" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
             <Grid x:Name="grid" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </ScrollViewer>
+        <TextBlock Name="Logo" Text="My Tree Viewer v:1.1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="36"/>
     </Grid>
 </Window>
